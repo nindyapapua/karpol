@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Population Atlas | 10 Most Populous Countries (2026)</title>
+  <!-- Google Fonts & minimal reset -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f4f7fc 0%, #e9eef4 100%);
+      font-family: 'Inter', sans-serif;
+      padding: 2rem 1.5rem;
+      color: #1a2c3e;
+    }
+
+    /* main container */
+    .dashboard {
+      max-width: 1400px;
+      margin: 0 auto;
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(2px);
+      border-radius: 2rem;
+      box-shadow: 0 20px 35px -12px rgba(0,0,0,0.2);
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+
+    /* header section */
+    .hero {
+      background: linear-gradient(135deg, #0b2b3b, #123e52);
+      padding: 2rem 2rem 1.8rem 2rem;
+      color: white;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .hero-content {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 1rem;
+    }
+
+    .title-section h1 {
+      font-weight: 700;
+      font-size: 1.9rem;
+      letter-spacing: -0.3px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .title-section h1 i {
+      background: rgba(255,255,255,0.2);
+      padding: 10px;
+      border-radius: 60px;
+      font-size: 1.4rem;
+    }
+
+    .sub {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      margin-top: 0.6rem;
+      font-weight: 400;
+    }
+
+    .stats-badge {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(4px);
+      padding: 0.7rem 1.2rem;
+      border-radius: 60px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* quick fact cards */
+    .fact-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      padding: 1.8rem 2rem;
+      background: #ffffffcc;
+      border-bottom: 1px solid #e2edf2;
+      justify-content: space-between;
+    }
+
+    .fact-card {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1rem 1.5rem;
+      flex: 1;
+      min-width: 150px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+      border: 1px solid #eef3f8;
+      transition: transform 0.2s;
+    }
+
+    .fact-card:hover {
+      transform: translateY(-3px);
+      border-color: #b9d3e6;
+    }
+
+    .fact-card i {
+      font-size: 1.8rem;
+      color: #1e6f5c;
+      margin-bottom: 0.5rem;
+      display: inline-block;
+    }
+
+    .fact-number {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #0f2f3b;
+      line-height: 1.2;
+    }
+
+    .fact-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
+      color: #5e7c8c;
+    }
+
+    /* table wrapper + responsive */
+    .table-wrapper {
+      padding: 1.8rem 2rem 2.5rem 2rem;
+      overflow-x: auto;
+    }
+
+    .population-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+      font-size: 0.95rem;
+    }
+
+    .population-table thead th {
+      text-align: left;
+      padding: 0.8rem 1rem;
+      background: #eef3fc;
+      border-radius: 1rem 1rem 0.8rem 0.8rem;
+      font-weight: 600;
+      color: #1f4e6b;
+      font-size: 0.85rem;
+      letter-spacing: 0.5px;
+    }
+
+    .population-table tbody tr {
+      background: white;
+      border-radius: 1.2rem;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+    }
+
+    .population-table tbody tr:hover {
+      transform: scale(1.002);
+      background: #ffffff;
+      box-shadow: 0 12px 22px -12px rgba(0, 0, 0, 0.2);
+    }
+
+    .population-table td {
+      padding: 1rem 1rem;
+      border-bottom: 1px solid #f0f4f9;
+      vertical-align: middle;
+    }
+
+    /* flag + country style */
+    .country-cell {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 600;
+    }
+
+    .flag-icon {
+      font-size: 1.8rem;
+      width: 36px;
+      text-align: center;
+      filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
+    }
+
+    .country-name {
+      font-weight: 700;
+      color: #0a2b33;
+    }
+
+    .region-badge {
+      background: #eef2fa;
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+      font-size: 0.7rem;
+      font-weight: 500;
+      display: inline-block;
+      color: #2c6279;
+    }
+
+    /* progress bar inside population cell */
+    .population-bar-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .population-number {
+      font-weight: 700;
+      font-family: monospace;
+      font-size: 0.95rem;
+      background: #f1f5f9;
+      padding: 0.2rem 0.6rem;
+      border-radius: 40px;
+      white-space: nowrap;
+    }
+
+    .bar-wrapper {
+      flex: 1;
+      min-width: 120px;
+      background: #e2e8f0;
+      border-radius: 20px;
+      height: 8px;
+      overflow: hidden;
+    }
+
+    .bar-fill {
+      background: linear-gradient(90deg, #2c7a6e, #48b5a0);
+      width: 0%;
+      height: 100%;
+      border-radius: 20px;
+    }
+
+    /* share of world pop */
+    .share-cell {
+      font-weight: 600;
+      color: #226b5b;
+    }
+
+    /* footer */
+    .footer-note {
+      background: #eef2f7;
+      padding: 1rem 2rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: #466b7c;
+      border-top: 1px solid #dce5ec;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    @media (max-width: 760px) {
+      body {
+        padding: 1rem;
+      }
+      .hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .fact-grid {
+        flex-direction: column;
+      }
+      .population-table td, .population-table th {
+        padding: 0.7rem 0.5rem;
+      }
+      .country-cell {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 4px;
+      }
+      .bar-wrapper {
+        min-width: 80px;
+      }
+    }
+
+    /* ranking circle */
+    .rank-circle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #eef2fa;
+      width: 32px;
+      height: 32px;
+      border-radius: 60px;
+      font-weight: 800;
+      font-size: 0.9rem;
+      color: #1f5e6e;
+    }
+  </style>
+</head>
+<body>
+<div class="dashboard">
+  <div class="hero">
+    <div class="hero-content">
+      <div class="title-section">
+        <h1>
+          <i class="fas fa-globe-asia"></i> 
+          Earth’s Giants
+        </h1>
+        <div class="sub">Top 10 most populous countries — updated estimates (2026) with demographic insights</div>
+      </div>
+      <div class="stats-badge">
+        <i class="fas fa-chart-line"></i> 
+        <span>Data snapshot · United Nations projections</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick stats based on dummy data computed dynamically via JS later, but we prefill using dummy data display-->
+  <div class="fact-grid" id="factGrid">
+    <!-- will be filled by js dynamic summary -->
+    <div class="fact-card"><i class="fas fa-users"></i><div class="fact-number" id="totalPopSpan">—</div><div class="fact-label">Total Population (Top 10)</div></div>
+    <div class="fact-card"><i class="fas fa-percent"></i><div class="fact-number" id="worldShareSpan">—</div><div class="fact-label">Share of World Population</div></div>
+    <div class="fact-card"><i class="fas fa-chart-simple"></i><div class="fact-number" id="avgDensitySpan">—</div><div class="fact-label">Avg. Density (people/km²)</div></div>
+    <div class="fact-card"><i class="fas fa-city"></i><div class="fact-number" id="mostDenseSpan">—</div><div class="fact-label">Most Dense Country</div></div>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="population-table" id="populationTable">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Country</th>
+          <th>Population (2026)</th>
+          <th>% of World</th>
+          <th>Density (per km²)</th>
+          <th>Region</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- dynamic rows via JS (dummy dataset) -->
+      </tbody>
+    </table>
+  </div>
+  <div class="footer-note">
+    <span><i class="fas fa-database"></i> Dummy data based on realistic estimates & demographic models</span>
+    <span><i class="fas fa-chart-pie"></i> Visual bars represent relative population size among top 10</span>
+  </div>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // DUMMY DATA FOR 10 MOST POPULATION COUNTRIES (2026)
+  // includes region, density, population, flag emoji (unicode)
+  // % world share calculated relative to ~8.1B world population (2026)
+  // --------------------------------------------------------------
+  const countriesData = [
+    { rank: 1, name: "India", flag: "🇮🇳", population: 1441700000, density: 488, region: "South Asia", worldPercent: 17.8 },
+    { rank: 2, name: "China", flag: "🇨🇳", population: 1425600000, density: 152, region: "East Asia", worldPercent: 17.6 },
+    { rank: 3, name: "United States", flag: "🇺🇸", population: 341900000, density: 37, region: "North America", worldPercent: 4.22 },
+    { rank: 4, name: "Indonesia", flag: "🇮🇩", population: 283500000, density: 149, region: "Southeast Asia", worldPercent: 3.50 },
+    { rank: 5, name: "Pakistan", flag: "🇵🇰", population: 251200000, density: 287, region: "South Asia", worldPercent: 3.10 },
+    { rank: 6, name: "Nigeria", flag: "🇳🇬", population: 236800000, density: 256, region: "West Africa", worldPercent: 2.92 },
+    { rank: 7, name: "Brazil", flag: "🇧🇷", population: 217700000, density: 26, region: "South America", worldPercent: 2.69 },
+    { rank: 8, name: "Bangladesh", flag: "🇧🇩", population: 174200000, density: 1336, region: "South Asia", worldPercent: 2.15 },
+    { rank: 9, name: "Russia", flag: "🇷🇺", population: 144200000, density: 8.4, region: "Eastern Europe / Asia", worldPercent: 1.78 },
+    { rank: 10, name: "Mexico", flag: "🇲🇽", population: 131700000, density: 67, region: "North America", worldPercent: 1.63 }
+  ];
+
+  // world population approx 8.1 billion for context (2026 reference)
+  const WORLD_POPULATION = 8100000000; // 8.1B
+
+  // Ensure each entry has computed world percent (just in case consistency)
+  // Also compute displayed share, but we keep given percent.
+  // Additional calculation for bar width relative to max population among top10
+  const maxPopulation = Math.max(...countriesData.map(c => c.population));
+  
+  // Helper to format population with commas
+  function formatNumber(num) {
+    return num.toLocaleString('en-US');
+  }
+
+  // compute total population of top 10 and other aggregations
+  function computeAggregates() {
+    const totalPop = countriesData.reduce((sum, c) => sum + c.population, 0);
+    const avgDensity = (countriesData.reduce((sum, c) => sum + c.density, 0) / countriesData.length).toFixed(1);
+    const mostDenseCountry = countriesData.reduce((max, c) => c.density > max.density ? c : max, countriesData[0]);
+    const worldShareTotal = (totalPop / WORLD_POPULATION * 100).toFixed(1);
+    return { totalPop, avgDensity, mostDenseCountry, worldShareTotal };
+  }
+
+  // Populate fact cards & dynamic summaries
+  function updateFacts() {
+    const { totalPop, avgDensity, mostDenseCountry, worldShareTotal } = computeAggregates();
+    document.getElementById('totalPopSpan').innerText = formatNumber(totalPop);
+    document.getElementById('worldShareSpan').innerText = `${worldShareTotal}%`;
+    document.getElementById('avgDensitySpan').innerText = `${avgDensity} /km²`;
+    document.getElementById('mostDenseSpan').innerHTML = `${mostDenseCountry.flag} ${mostDenseCountry.name}`;
+  }
+
+  // Render table with bar graph and all data
+  function renderTable() {
+    const tbody = document.getElementById('tableBody');
+    tbody.innerHTML = '';
+    
+    countriesData.forEach((country, idx) => {
+      const row = tbody.insertRow();
+      // rank cell
+      const rankCell = row.insertCell(0);
+      rankCell.innerHTML = `<span class="rank-circle">${country.rank}</span>`;
+      
+      // country cell with flag + name + region badge subtle
+      const countryCell = row.insertCell(1);
+      countryCell.innerHTML = `
+        <div class="country-cell">
+          <span class="flag-icon">${country.flag}</span>
+          <div>
+            <div class="country-name">${country.name}</div>
+            <span class="region-badge"><i class="fas fa-map-marker-alt" style="font-size:0.65rem;"></i> ${country.region}</span>
+          </div>
+        </div>
+      `;
+      
+      // population cell with custom bar & number
+      const popCell = row.insertCell(2);
+      const percentageOfMax = (country.population / maxPopulation) * 100;
+      popCell.innerHTML = `
+        <div class="population-bar-container">
+          <span class="population-number"><i class="fas fa-user-group"></i> ${formatNumber(country.population)}</span>
+          <div class="bar-wrapper">
+            <div class="bar-fill" style="width: ${percentageOfMax}%;"></div>
+          </div>
+        </div>
+      `;
+      
+      // world percent cell
+      const percentCell = row.insertCell(3);
+      percentCell.innerHTML = `<span class="share-cell"><strong>${country.worldPercent}%</strong></span> <span style="font-size:0.7rem; color:#5f7f8f;">of global</span>`;
+      
+      // density cell with little icon
+      const densityCell = row.insertCell(4);
+      densityCell.innerHTML = `<i class="fas fa-compress-alt" style="color:#578b7c;"></i> ${country.density.toFixed(1)} <span style="font-size:0.7rem;">/km²</span>`;
+      
+      // region cell (already present but we show clear text)
+      const regionCell = row.insertCell(5);
+      regionCell.innerHTML = `<i class="fas fa-globe"></i> ${country.region}`;
+    });
+    
+    // Additional: Add a small caption note in table footer? optional
+  }
+
+  // Alternative method to also compute and update any extra stat: world share from top10
+  // All needed.
+  function init() {
+    renderTable();
+    updateFacts();
+    // add hover / tooltip dynamic feel
+    addExtraMicroInteractions();
+  }
+
+  // micro interaction: highlight bar on row hover (simple effect)
+  function addExtraMicroInteractions() {
+    const rows = document.querySelectorAll('#populationTable tbody tr');
+    rows.forEach(row => {
+      row.addEventListener('mouseenter', (e) => {
+        const barFill = row.querySelector('.bar-fill');
+        if (barFill) barFill.style.opacity = '0.85';
+      });
+      row.addEventListener('mouseleave', (e) => {
+        const barFill = row.querySelector('.bar-fill');
+        if (barFill) barFill.style.opacity = '1';
+      });
+    });
+  }
+
+  // Small tooltip-like info for ranking: already fine.
+  // Additional dummy metadata: refresh display on window load
+  window.addEventListener('DOMContentLoaded', init);
+  
+  // Optional: show a live timestamp of data
+  const addTimestamp = () => {
+    const footer = document.querySelector('.footer-note');
+    if (footer) {
+      const timeSpan = document.createElement('span');
+      const now = new Date();
+      const formattedDate = `${now.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}`;
+      timeSpan.innerHTML = `<i class="far fa-calendar-alt"></i> Dataset: Q2 2026 · UN projections`;
+      footer.prepend(timeSpan);
+    }
+  };
+  setTimeout(addTimestamp, 10);
+</script>
+
+<!-- additional style for smoothness -->
+<style>
+  .bar-fill {
+    transition: width 0.5s cubic-bezier(0.2, 0.9, 0.4, 1.1), opacity 0.2s;
+  }
+  .population-table tbody tr {
+    transition: all 0.2s;
+  }
+  .fact-number {
+    transition: all 0.2s;
+  }
+  .dashboard {
+    animation: fadeSlideUp 0.5s ease-out;
+  }
+  @keyframes fadeSlideUp {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  .region-badge i, .share-cell i {
+    margin-right: 3px;
+  }
+  .population-number i {
+    font-size: 0.8rem;
+    margin-right: 5px;
+  }
+  .rank-circle {
+    background: #eef2fa;
+    transition: background 0.1s;
+  }
+  tr:hover .rank-circle {
+    background: #cbdde9;
+  }
+</style>
+</body>
+</html>
