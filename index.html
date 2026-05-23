@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Sign in | Modern Access Portal</title>
+  <!-- Google Fonts + simple CSS reset & smooth design -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Font Awesome 6 (free icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(145deg, #eef2f9 0%, #d9e2ef 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+      position: relative;
+    }
+
+    /* subtle animated background accent */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.08), transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* main card container */
+    .login-container {
+      width: 100%;
+      max-width: 450px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(0px);
+      border-radius: 2rem;
+      box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.25), 0 2px 5px rgba(0, 0, 0, 0.02);
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s;
+      z-index: 2;
+    }
+
+    .login-container:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 30px 50px -18px rgba(0, 0, 0, 0.3);
+    }
+
+    /* decorative header area */
+    .brand-header {
+      background: linear-gradient(135deg, #1e2b3c, #0f2027);
+      padding: 2rem 1.5rem 1.8rem;
+      text-align: center;
+      color: white;
+    }
+
+    .brand-icon {
+      background: rgba(255, 255, 255, 0.2);
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 30px;
+      backdrop-filter: blur(4px);
+      font-size: 2.4rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .brand-header h1 {
+      font-weight: 600;
+      font-size: 1.9rem;
+      letter-spacing: -0.3px;
+      margin-bottom: 0.3rem;
+    }
+
+    .brand-header p {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      font-weight: 400;
+    }
+
+    /* form area */
+    .login-form {
+      padding: 2rem 1.8rem 2.2rem;
+    }
+
+    /* input groups */
+    .input-group {
+      margin-bottom: 1.4rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .input-label {
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 0.45rem;
+      color: #1f2a3e;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .input-label i {
+      font-size: 0.85rem;
+      color: #4f46e5;
+      width: 18px;
+    }
+
+    .input-field {
+      width: 100%;
+      padding: 0.9rem 1rem;
+      font-size: 1rem;
+      font-family: 'Inter', monospace;
+      background: #f9fafc;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 1.25rem;
+      transition: all 0.2s ease;
+      outline: none;
+      color: #0a0f1c;
+      font-weight: 500;
+    }
+
+    .input-field:focus {
+      border-color: #4f46e5;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.15);
+    }
+
+    /* extra row (remember + forgot) */
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1rem 0 1.6rem;
+      font-size: 0.85rem;
+    }
+
+    .checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      color: #2c3e50;
+    }
+
+    .checkbox input {
+      width: 16px;
+      height: 16px;
+      accent-color: #4f46e5;
+      cursor: pointer;
+    }
+
+    .forgot-link {
+      color: #4f46e5;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .forgot-link:hover {
+      color: #1e1b7a;
+      text-decoration: underline;
+    }
+
+    /* login button */
+    .login-btn {
+      background: linear-gradient(95deg, #4f46e5, #7c3aed);
+      width: 100%;
+      padding: 0.9rem;
+      border: none;
+      border-radius: 1.8rem;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 5px 12px rgba(79, 70, 229, 0.3);
+      margin-bottom: 1.5rem;
+    }
+
+    .login-btn i {
+      font-size: 1.1rem;
+    }
+
+    .login-btn:hover {
+      background: linear-gradient(95deg, #4338ca, #6d28d9);
+      transform: scale(1.01);
+      box-shadow: 0 10px 20px rgba(79, 70, 229, 0.4);
+    }
+
+    .login-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* demo / signup hint */
+    .signup-prompt {
+      text-align: center;
+      font-size: 0.85rem;
+      color: #4b5565;
+      border-top: 1px solid #edf2f7;
+      padding-top: 1.5rem;
+      margin-top: 0.2rem;
+    }
+
+    .signup-prompt a {
+      color: #4f46e5;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .signup-prompt a:hover {
+      text-decoration: underline;
+    }
+
+    /* alert message styling (dynamic) */
+    .message-area {
+      margin-bottom: 1rem;
+      font-size: 0.8rem;
+      text-align: center;
+      min-height: 44px;
+    }
+
+    .alert {
+      background: #fee2e2;
+      border-left: 4px solid #dc2626;
+      color: #991b1b;
+      padding: 0.7rem;
+      border-radius: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .alert.success {
+      background: #e0f2fe;
+      border-left-color: #0f3b5c;
+      color: #0c4a6e;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    /* small responsiveness */
+    @media (max-width: 480px) {
+      .login-form {
+        padding: 1.5rem;
+      }
+      .brand-header {
+        padding: 1.5rem 1rem;
+      }
+      .brand-header h1 {
+        font-size: 1.6rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="login-container">
+  <div class="brand-header">
+    <div class="brand-icon">
+      <i class="fas fa-laptop-code"></i>
+    </div>
+    <h1>Welcome back</h1>
+    <p>Sign in to your secure account</p>
+  </div>
+
+  <div class="login-form">
+    <!-- dynamic message area (for errors / success demo) -->
+    <div id="messageBox" class="message-area"></div>
+
+    <!-- login form with custom validation & UI feedback -->
+    <form id="loginForm" action="#" method="POST" novalidate>
+      <div class="input-group">
+        <label class="input-label" for="email">
+          <i class="fas fa-envelope"></i> Email address
+        </label>
+        <input type="email" id="email" name="email" class="input-field" placeholder="hello@example.com" value="demo@access.com" autocomplete="email" required>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label" for="password">
+          <i class="fas fa-lock"></i> Password
+        </label>
+        <input type="password" id="password" name="password" class="input-field" placeholder="••••••••" value="password123" autocomplete="current-password" required>
+      </div>
+
+      <div class="form-options">
+        <label class="checkbox">
+          <input type="checkbox" id="rememberCheckbox"> <span>Keep me signed in</span>
+        </label>
+        <a href="#" class="forgot-link" id="forgotPasswordLink"><i class="fas fa-question-circle"></i> Forgot password?</a>
+      </div>
+
+      <button type="submit" class="login-btn" id="loginButton">
+        <i class="fas fa-arrow-right-to-bracket"></i> Sign in
+      </button>
+
+      <div class="signup-prompt">
+        Don't have an account? <a href="#" id="signupRedirect">Create free account</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- simple client-side script for interaction and validation -->
+<script>
+  (function() {
+    // DOM elements
+    const loginForm = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const rememberCheckbox = document.getElementById('rememberCheckbox');
+    const messageBox = document.getElementById('messageBox');
+    const forgotLink = document.getElementById('forgotPasswordLink');
+    const signupRedirect = document.getElementById('signupRedirect');
+
+    // Helper function to show user feedback message (clear previous then show)
+    function showMessage(type, text) {
+      messageBox.innerHTML = ''; // clear
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `alert ${type === 'error' ? '' : 'success'}`;
+      if (type === 'error') {
+        msgDiv.innerHTML = `<i class="fas fa-circle-exclamation"></i> ${text}`;
+      } else {
+        msgDiv.innerHTML = `<i class="fas fa-check-circle"></i> ${text}`;
+      }
+      messageBox.appendChild(msgDiv);
+
+      // auto hide success message after 3 seconds (useful for demo)
+      if (type === 'success') {
+        setTimeout(() => {
+          if (messageBox.firstChild === msgDiv) {
+            msgDiv.style.opacity = '0';
+            setTimeout(() => {
+              if (messageBox.firstChild === msgDiv) messageBox.innerHTML = '';
+            }, 200);
+          }
+        }, 2800);
+      } else {
+        // error auto clear after 4 seconds, but not immediate
+        setTimeout(() => {
+          if (messageBox.firstChild === msgDiv) {
+            msgDiv.style.opacity = '0.7';
+            setTimeout(() => {
+              if (messageBox.firstChild === msgDiv) messageBox.innerHTML = '';
+            }, 400);
+          }
+        }, 4000);
+      }
+    }
+
+    // clean previous message when typing to improve UX
+    function clearMessageOnInput() {
+      if (messageBox.innerHTML !== '') {
+        messageBox.innerHTML = '';
+      }
+    }
+
+    emailInput.addEventListener('input', clearMessageOnInput);
+    passwordInput.addEventListener('input', clearMessageOnInput);
+
+    // Mock login validation (frontend simulation)
+    // Because it's a pure HTML/CSS/JS frontend, we demonstrate realistic validation.
+    // In real app you would send request to backend, but this is a showcase.
+    // For demo, static credentials: any valid email format + password length >= 6
+    // but we also provide an additional special demo: email "demo@access.com" and password "password123" always works.
+    // However we want to show both proper validation. Let's implement robust frontend authentication.
+    function validateCredentials(email, password) {
+      // trim spaces
+      const trimmedEmail = email.trim();
+      const trimmedPass = password.trim();
+
+      // Email regex (standard)
+      const emailPattern = /^[^\s@]+@([^\s@]+\.)+[^\s@]+$/;
+      if (!trimmedEmail) {
+        return { valid: false, message: 'Email address is required.' };
+      }
+      if (!emailPattern.test(trimmedEmail)) {
+        return { valid: false, message: 'Please enter a valid email address (e.g., name@domain.com).' };
+      }
+      if (!trimmedPass) {
+        return { valid: false, message: 'Password cannot be empty.' };
+      }
+      if (trimmedPass.length < 4) {
+        return { valid: false, message: 'Password must be at least 4 characters long.' };
+      }
+
+      // Additional demo check - we treat any valid format & password length >=4 as success? No — too trivial.
+      // For realistic portal, we simulate that only specific demo account works,
+      // but to avoid frustration, we allow any "test" + valid pass. But better: show success for any valid input?
+      // However many login pages would need valid account in database. Here we will:
+      // Allow login if email format correct and password length >=4, but show a special demo hint? But to not mislead,
+      // we inform user that any valid format works for demonstration: but that's not safe simulation.
+      // Actually as a pure frontend login page, best approach: Accept any valid email & password (>=4 chars) and redirect to a dashboard placeholder?
+      // Since no backend, we will simulate successful login and show popup / message and prevent actual submit.
+      // Enhance: success redirect simulation (window alert style with modern behavior)
+      // Additional detail: we also added prefilled demo demo@access.com / password123. Let's celebrate success and simulate a redirect.
+      // But we also want to keep the user experience clear: On success, display success message and after 1 sec show "redirect to dashboard".
+      // Because this is a static login page, we avoid real redirect but show nice demo.
+      return { valid: true, message: 'Authentication successful! Redirecting...' };
+    }
+
+    // Handle form submit (login attempt)
+    function handleLogin(event) {
+      event.preventDefault();
+
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      const remember = rememberCheckbox.checked;
+
+      const result = validateCredentials(email, password);
+
+      if (!result.valid) {
+        showMessage('error', result.message);
+        return;
+      }
+
+      // Successful validation: store mock session & remember flag if needed (localStorage demo)
+      if (remember) {
+        // For demo: persist a flag (not actual security token)
+        localStorage.setItem('demo_remember_me', 'true');
+        localStorage.setItem('demo_user_email', email.trim());
+        showMessage('success', '✓ Signed in successfully. Remember preference saved.');
+      } else {
+        // Clear any previous stored demo flags
+        localStorage.removeItem('demo_remember_me');
+        localStorage.removeItem('demo_user_email');
+        showMessage('success', '✓ Welcome back! Login successful.');
+      }
+
+      // Disable button briefly to prevent double submit (nice UX)
+      const loginBtn = document.getElementById('loginButton');
+      const originalBtnText = loginBtn.innerHTML;
+      loginBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Authenticating...';
+      loginBtn.disabled = true;
+
+      // Simulate network / redirect delay (show success feedback)
+      setTimeout(() => {
+        // on success we simulate a modern "dashboard" notification
+        // For a real app, you'd redirect: window.location.href = "/dashboard";
+        // Here we'll show a sweet alert style replacement but also reset button after demo?
+        // Since it's just a preview, we reset the button state but better present "Redirect demo" message.
+        // We display an additional modal-like message? but to not break layout we show an overlay info? Let's do a confirm style? 
+        // Instead we display a floating success and user can experience "demo version". Because it's pure login page, 
+        // but we inform that in real scenario redirect would happen. For demonstration we reset button but also reset form? not necessary.
+        loginBtn.innerHTML = originalBtnText;
+        loginBtn.disabled = false;
+
+        // show an additional success (again ensure clear existing)
+        // we push a final success message with redirect simulation in console
+        const successMsgDiv = document.createElement('div');
+        successMsgDiv.className = 'alert success';
+        successMsgDiv.innerHTML = '<i class="fas fa-rocket"></i> Login succeeded! (Demo dashboard would open)';
+        messageBox.innerHTML = '';
+        messageBox.appendChild(successMsgDiv);
+
+        // optional: after 2 seconds, reset message to clean state but keep friendly.
+        setTimeout(() => {
+          if (messageBox.firstChild === successMsgDiv) {
+            successMsgDiv.style.opacity = '0.5';
+            setTimeout(() => {
+              if (messageBox.firstChild === successMsgDiv) messageBox.innerHTML = '';
+            }, 800);
+          }
+        }, 3000);
+
+        // You could also use a small console log to indicate redirection would happen
+        console.log('🔐 LOGIN SUCCESS: User', email.trim(), '| Remember:', remember);
+        // Additional: if needed, you could also redirect to "#" but no actual page. For preview, it's fine.
+        // We also simulate a small window alert alternative? better not to interrupt.
+      }, 1200);
+    }
+
+    // Forgot password interactive demo (no actual backend)
+    function handleForgotPassword(e) {
+      e.preventDefault();
+      const emailVal = emailInput.value.trim();
+      if (emailVal && emailVal.includes('@')) {
+        showMessage('success', `📧 Password reset link sent to ${emailVal} (demo).`);
+      } else {
+        showMessage('error', 'Please enter a valid email address above to reset password.');
+      }
+    }
+
+    // Signup redirection simulation (clean demo)
+    function handleSignupRedirect(e) {
+      e.preventDefault();
+      showMessage('success', '✨ Registration demo — new account creation would open (static preview).');
+      // you could also animate a fake transition but just to keep design consistent
+      setTimeout(() => {
+        // Optional: prefill something? but not needed.
+      }, 100);
+    }
+
+    // Check if previously remembered me flag to prefill demo (optional)
+    function loadRememberedDemo() {
+      const remembered = localStorage.getItem('demo_remember_me');
+      const savedEmail = localStorage.getItem('demo_user_email');
+      if (remembered === 'true' && savedEmail) {
+        emailInput.value = savedEmail;
+        rememberCheckbox.checked = true;
+        // display a small note but not intrusive
+        const note = document.createElement('div');
+        note.style.fontSize = '0.7rem';
+        note.style.marginTop = '0.3rem';
+        note.style.color = '#4f46e5';
+        note.style.textAlign = 'center';
+        note.innerHTML = '<i class="fas fa-history"></i> Restored from saved session';
+        const parentDiv = emailInput.closest('.input-group');
+        if (parentDiv && !parentDiv.querySelector('.restore-note')) {
+          note.classList.add('restore-note');
+          parentDiv.appendChild(note);
+          setTimeout(() => note.remove(), 3000);
+        }
+      }
+    }
+
+    // attach event listeners
+    loginForm.addEventListener('submit', handleLogin);
+    forgotLink.addEventListener('click', handleForgotPassword);
+    signupRedirect.addEventListener('click', handleSignupRedirect);
+
+    // load demo memory if available
+    loadRememberedDemo();
+
+    // Additional polishing: remove any native form action causing page reload
+    // Prevent accidental default link behavior of forgot/signup already done.
+    // Also adding accessibility
+    const style = document.createElement('style');
+    style.textContent = `
+      .alert {
+        transition: opacity 0.2s ease;
+      }
+      .login-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+        transform: none;
+      }
+    `;
+    document.head.appendChild(style);
+
+    // Special: We make the password field show toggle? optional but clean. Not required.
+    // But we can provide a tiny "show password" for better UX? Quick addition:
+    // Because it's clean but valuable, we add a small eye icon near password? Not mandatory but cool.
+    // Add show/hide button inside password group without overcomplicating.
+    const passGroup = passwordInput.parentElement;
+    const toggleEye = document.createElement('i');
+    toggleEye.className = 'far fa-eye-slash';
+    toggleEye.style.position = 'relative';
+    toggleEye.style.float = 'right';
+    toggleEye.style.marginTop = '-2.1rem';
+    toggleEye.style.marginRight = '0.9rem';
+    toggleEye.style.cursor = 'pointer';
+    toggleEye.style.color = '#6c757d';
+    toggleEye.style.fontSize = '1rem';
+    toggleEye.style.zIndex = '2';
+    passGroup.style.position = 'relative';
+    passwordInput.style.paddingRight = '2.5rem';
+    passGroup.appendChild(toggleEye);
+
+    let isPasswordVisible = false;
+    toggleEye.addEventListener('click', () => {
+      isPasswordVisible = !isPasswordVisible;
+      if (isPasswordVisible) {
+        passwordInput.type = 'text';
+        toggleEye.className = 'far fa-eye';
+      } else {
+        passwordInput.type = 'password';
+        toggleEye.className = 'far fa-eye-slash';
+      }
+    });
+  })();
+</script>
+</body>
+</html>
