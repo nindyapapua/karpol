@@ -1,0 +1,15 @@
+C:\Users\Felix\AppData\Roaming\Notepad++\plugins\config\PythonScript\scripts
+
+
+ 140x5kKVuWUjiXbe1XqxUOY2UYHizXNvxIhWHOjoVRF6j8dieXMSo0htB
+ 
+ 
+ npx clasp clone 140x5kKVuWUjiXbe1XqxUOY2UYHizXNvxIhWHOjoVRF6j8dieXMSo0htB
+ 
+ EPERM: operation not permitted, mkdir 'C:\'
+ 
+ 
+ btnUpdateAdmin
+ 
+ 
+ 

@@ -1,0 +1,113 @@
+editPermohonan
+
+
+                <div>
+					  <label for="bukti" class="block mb-2.5 text-sm font-medium text-heading">Bukti</label>
+					  <input type="text" id="bukti" class="w-full border border-slate-200 rounded-xl px-4 py-2.5 text-sm font-medium focus:border-emerald-500 focus:ring-2 focus:ring-emerald-100 outline-none" placeholder="Bukti-bukti" />
+                </div>
+				
+				#perm-nominal
+				
+				
+				focus:border-emerald-500
+
+
+
+
+        document.getElementById("btnUpdateAdmin").style.display = "none";
+        document.getElementById("btnsubmitSaveAdmin").style.display = "block";
+		
+		
+		framebtnUpdateCancel
+		
+		 document.getElementById("framebtnUpdateCancel").style.display = "none";
+		 
+		 resetKeuForm
+		
+		
+		
+		tbodyPerhitunganAdminPemohon
+		
+		tbodyPerhitunganAdmin
+		
+		tbodyPerhitungan
+		
+		
+		
+		grandTotalTeknisAdmin
+		
+		
+		keu-nomor-nota, onchange="autoFillKeuanganFromNota()"
+		
+		<th class="border p-2 w-12 text-center text-xs font-bold text-slate-600">Act</th>
+		
+		
+		
+ <thead>
+	<tr class="bg-slate-200">
+	  <th class="border p-2 w-auto text-center text-xs font-bold text-slate-600">Rincian</th>
+	  <th class="border p-2 w-14 text-center text-xs font-bold text-slate-600"> + / - </th>
+	  <th class="w-[18ch] border p-2 w-2/6 text-center text-xs font-bold text-slate-600">Nilai (Rp)</th>
+	  <th class="border p-2 w-12 text-center text-xs font-bold text-slate-600">Act</th>
+	</tr>
+</thead>
+
+<tbody id="tbodyPerhitunganAdmin">
+
+<td class="border p-1 text-center">
+<div class="p-3.5 bg-slate-50 rounded-xl border border-slate-100 space-y-1 text-xs">
+                  <h4 class="block text-xs font-bold text-slate-600 mt-2">Rincian Perhitungan Teknis</h4>
+
+                  <div class="overflow-x-auto">
+                    
+
+                    <table class="w-full border-collapse border border-slate-300">
+
+                      <thead>
+                        <tr class="bg-slate-200">
+                          <th class="border p-2 w-auto text-center text-xs font-bold text-slate-600">Rincian</th>
+                          <th class="border p-2 w-14 text-center text-xs font-bold text-slate-600"> + / - </th>
+                          <th class="w-[18ch] border p-2 w-2/6 text-center text-xs font-bold text-slate-600">Nilai (Rp)</th>
+                          <th class="border p-2 w-12 text-center text-xs font-bold text-slate-600">Act</th>
+                        </tr>
+                      </thead>
+
+                      <tbody id="tbodyPerhitunganAdmin">
+                        <tr>
+                          <td class="border p-1">
+                            <input type="text" class="uraian w-full border rounded px-2 py-1 text-sm dynamic-input" placeholder="Uraian" name="uraian[]">
+                          </td>
+
+                          <td class="border p-1">
+                            <select class="operator w-full border rounded px-2 py-1 text-sm dynamic-input" onchange="hitungTotalTeknisAdmin()" name="operator[]">
+                          <option value=" +">+</option>
+                          <option value=" -">-</option>
+                        </select>
+                          </td>
+                          
+                          <td class="border p-1">
+                            <input type="text" class="nilai text-sm  border border-gray-300 rounded px-2 py-1 text-right dynamic-input" onkeyup="formatRupiahWComa(this); hitungTotalTeknisAdmin();" placeholder="0" name="nilai[]">
+                          </td>
+                          <td class="border p-1">
+                            &nbsp;
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div class="flex justify-between mt-8">
+                    <button type="button" onclick="tambahBarisAdmin()" class=" bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-2 rounded-lg text-xs font-bold transition-all active:scale-[0.98]">
+                + Baris
+                </button>
+
+                    <div class="font-bold text-sm mr-14">TOTAL :
+                      <span id="grandTotalTeknisAdmin">Rp0</span>
+                    </div>
+                  </div>
+                </div>
+				
+		<button onclick="editPermohonan('N.Verik-005/Minku/10/2026')" title="Edit Nota Permohonan" class="px-2 py-1 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 text-xs rounded-lg transition-all font-bold">
+                <i class="fa-solid fa-pen-to-square"></i> Edit
+              </button>
+		
